@@ -231,7 +231,6 @@ class ReservationViewSet(
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
-        # return Reservation.objects.filter(user=self.request.user)
         return (
             Reservation.objects.filter(user=self.request.user)
             .prefetch_related(
