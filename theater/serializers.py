@@ -136,7 +136,6 @@ class TicketSerializer(serializers.ModelSerializer):
 
 
 class TicketListSerializer(TicketSerializer):
-    # performance = PerformanceListSerializer(many=False, read_only=True)
     performance = serializers.SerializerMethodField()
 
     def get_performance(self, obj):
@@ -189,8 +188,6 @@ class ReservationSerializer(serializers.ModelSerializer):
         with transaction.atomic():
             tickets_data = validated_data.pop("tickets")
             reservation = Reservation.objects.create(**validated_data)
-            # for ticket_data in tickets_data:
-            #     Ticket.objects.create(reservation=reservation, **ticket_data)
             tickets = [
                 Ticket(reservation=reservation, **ticket_data)
                 for ticket_data in tickets_data
